@@ -64,7 +64,11 @@ public class Controle {
             @Override
             protected Void call() throws Exception{
                 while(true){
-                    Thread.sleep(1000);
+                    Thread.sleep(5000);
+                    Platform.runLater(()->{
+                        tfLista.setText("Criando Lista...");
+                    });
+
                     geradorLista.novaLista();
                     Platform.runLater(()->{
                         tfLista.setText(geradorLista.getLista().toString());

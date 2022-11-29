@@ -37,7 +37,7 @@ public class Controle {
         };
 
         // Run the task in a background thread
-        Thread backgroundThread = new Thread(()->runTask());
+        Thread backgroundThread = new Thread(task);
         // Terminate the running thread if the application exits
         backgroundThread.setDaemon(true);
         // Start the thread

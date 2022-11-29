@@ -1,7 +1,19 @@
 package ifpr.pgua.eic.threadsjavafx.Cmd;
 
 public class AppFibo {
-    
+    /*
+        public static long fibo(int n) {
+            if(n>1){
+                return fibo(n-1)+fibo(n-2);
+            }else{
+                return 1;
+            }
+     }
+
+    public static void main(String[] args) {
+        long res = fibo(50);
+        System.out.println(res);
+    }*/
 
     public static void main(String[] args) throws Exception{
         Fibo f = new Fibo(50);

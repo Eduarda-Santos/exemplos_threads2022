@@ -54,6 +54,7 @@ public class Controle {
     {
         return new Task<Void>() {
             @Override
+            //call similar ao metodo run
             protected Void call() throws Exception {
                 for(int i = 1; i <= 10; i++)
                 {

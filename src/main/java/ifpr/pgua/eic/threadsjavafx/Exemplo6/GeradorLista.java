@@ -16,6 +16,11 @@ public class GeradorLista{
     }
 
     public void novaLista(){
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            // TODO: handle exception
+        }
         Random rnd = new Random();
         lista.clear();
         for(int i=0;i<10;i++){
