@@ -67,6 +67,7 @@ public class Controle {
                     Thread.sleep(5000);
                     Platform.runLater(()->{
                         tfLista.setText("Criando Lista...");
+                        setvisiable(true);
                     });
 
                     geradorLista.novaLista();
