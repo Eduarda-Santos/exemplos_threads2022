@@ -3,7 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ProgressIndicator?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="ifpr.pgua.eic.threadsjavafx.Exemplo6.Controle"
@@ -19,8 +18,6 @@
 
     <TextField fx:id="tfLista"/>
 
+    <ProgressIndicator fx:id="progressIndicator" progresso="false"/>
     
-    <HBox>
-        <ProgressIndicator fx:id="progressIndicator" progress="0" layoutX="78.0" layoutY="55.0"/>
-    </HBox>
 </VBox>

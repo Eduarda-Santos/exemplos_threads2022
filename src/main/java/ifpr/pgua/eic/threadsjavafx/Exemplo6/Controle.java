@@ -39,7 +39,7 @@ public class Controle {
     private TextField tfLista;
 
     @FXML
-    private ProgressIndicator pbProgress;
+    private ProgressIndicator progresso;
 
     private DateTimeFormatter df=DateTimeFormatter.ofPattern("HH:mm:ss");
     private GeradorLista geradorLista;
@@ -57,16 +57,7 @@ public class Controle {
         // Start the thread
         backgroundThread.start();
 
-        Thread backgroundGerador = new Thread(atualizadorLista());
-        backgroundGerador.setDaemon(true);
-        backgroundGerador.start();
-
-        Task<Void> progresso = progressIndicator();
-        pbProgress.progressProperty().bind(progresso.progressProperty());
-    
-        Thread threadProgresso = new Thread(progresso);
-        threadProgresso.setDaemon(true);
-        threadProgresso.start();
+        progresso.setVisible(true);
 
     }
 
@@ -78,28 +69,9 @@ public class Controle {
                 while(true){
                     String str = df.format(LocalDateTime.now());
                     this.updateMessage(str);
+                    progresso.setVisible(false);
                     Thread.sleep(1000);
 
-                }
-            }
-        };
-    }
-
-    public Task<Void> progressIndicator(){
-        return new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-
-                int contProgresso=0;
-                while(true){
-                    contProgresso+=10;
-                    if(contProgresso>100){
-                        contProgresso=0;
-                        pbProgress.setProgress(contProgresso);
-                    }
-                    this.updateProgress(contProgresso,100);
-                    Thread.sleep(1000);
-                    
                 }
             }
         };
@@ -113,10 +85,7 @@ public class Controle {
                     Thread.sleep(5000);
                     Platform.runLater(()->{
                         tfLista.setText("Criando Lista...");
-                        //progresso(null);
                         
-                        //progresso(null);
-                        //pbProgresso.setVisible(true);
                     });
 
                     geradorLista.novaLista();
