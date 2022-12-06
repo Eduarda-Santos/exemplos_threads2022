@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -29,50 +30,19 @@ public class Controle {
     private Label lbStatus;
 
     @FXML
+    private TextArea taContent;
+
+    @FXML
     private TextField tfStatus;
 
     @FXML
     private TextField tfLista;
 
     @FXML
-    private ProgressIndicator pbProgresso;
+    private ProgressIndicator pbProgress;
 
     private DateTimeFormatter df=DateTimeFormatter.ofPattern("HH:mm:ss");
     private GeradorLista geradorLista;
-
-    public void progresso(Stage stage){
-        Group root = new Group();
-        //root.getChildren().add(progresso);
-
-        Scene scene = new Scene(root,300,200);
-        
-        //Task<Void> task = atualizadorLista();
-
-        stage.setScene(scene);  
-        stage.setTitle("Progress Indicator");  
-        scene.getStylesheets().add("progresssample/Style.css");
-
-        ProgressBar progresso = new ProgressBar();
-        progresso.setProgress(10);
-
-        HBox hb = new HBox();
-        hb.setSpacing(5);
-        hb.setAlignment(Pos.CENTER);
-        hb.getChildren().add(progresso);
-
-        VBox vb = new VBox();
-        vb.setSpacing(5);
-        vb.getChildren().add(progresso);
-        scene.setRoot(vb);
-        stage.show();
-
-
-        
-        //primaryStage.show(); 
-
-        //pbProgresso.setVisible(false);
-        //pbProgresso.setVisible(true);
-    }/**/
 
     public void initialize(){
 
@@ -91,7 +61,12 @@ public class Controle {
         backgroundGerador.setDaemon(true);
         backgroundGerador.start();
 
-
+        Task<Void> progresso = progressIndicator();
+        pbProgress.progressProperty().bind(progresso.progressProperty());
+    
+        Thread threadProgresso = new Thread(progresso);
+        threadProgresso.setDaemon(true);
+        threadProgresso.start();
 
     }
 
@@ -110,6 +85,26 @@ public class Controle {
         };
     }
 
+    public Task<Void> progressIndicator(){
+        return new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+
+                int contProgresso=0;
+                while(true){
+                    contProgresso+=10;
+                    if(contProgresso>100){
+                        contProgresso=0;
+                        pbProgress.setProgress(contProgresso);
+                    }
+                    this.updateProgress(contProgresso,100);
+                    Thread.sleep(1000);
+                    
+                }
+            }
+        };
+    }
+
     public Task<Void> atualizadorLista(){
         return new Task<Void>(){
             @Override
@@ -118,9 +113,10 @@ public class Controle {
                     Thread.sleep(5000);
                     Platform.runLater(()->{
                         tfLista.setText("Criando Lista...");
-                        //progresso();
-                        progresso(null);
-                        pbProgresso.setVisible(true);
+                        //progresso(null);
+                        
+                        //progresso(null);
+                        //pbProgresso.setVisible(true);
                     });
 
                     geradorLista.novaLista();
