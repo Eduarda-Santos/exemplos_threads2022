@@ -3,10 +3,19 @@ package ifpr.pgua.eic.threadsjavafx.Exemplo6;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +27,19 @@ public class Controle {
     private Label lbRelogio;
 
     @FXML
+    private Label lbStatus;
+
+    @FXML
+    private TextArea taContent;
+
+    @FXML
+    private TextField tfStatus;
+
+    @FXML
     private TextField tfLista;
+
+    @FXML
+    private ProgressIndicator progresso;
 
     private DateTimeFormatter df=DateTimeFormatter.ofPattern("HH:mm:ss");
     private GeradorLista geradorLista;
@@ -36,11 +57,7 @@ public class Controle {
         // Start the thread
         backgroundThread.start();
 
-        Thread backgroundGerador = new Thread(atualizadorLista());
-        backgroundGerador.setDaemon(true);
-        backgroundGerador.start();
-
-
+        progresso.setVisible(true);
 
     }
 
@@ -52,6 +69,7 @@ public class Controle {
                 while(true){
                     String str = df.format(LocalDateTime.now());
                     this.updateMessage(str);
+                    progresso.setVisible(false);
                     Thread.sleep(1000);
 
                 }
@@ -67,7 +85,7 @@ public class Controle {
                     Thread.sleep(5000);
                     Platform.runLater(()->{
                         tfLista.setText("Criando Lista...");
-                        setvisiable(true);
+                        
                     });
 
                     geradorLista.novaLista();

@@ -18,4 +18,6 @@
 
     <TextField fx:id="tfLista"/>
 
+    <ProgressIndicator fx:id="progressIndicator" progresso="false"/>
+    
 </VBox>
